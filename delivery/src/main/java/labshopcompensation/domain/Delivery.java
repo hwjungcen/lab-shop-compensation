@@ -3,6 +3,9 @@ package labshopcompensation.domain;
 import labshopcompensation.domain.DeliveryStarted;
 import labshopcompensation.DeliveryApplication;
 import javax.persistence.*;
+
+import org.springframework.beans.BeanUtils;
+
 import java.util.List;
 import lombok.Data;
 import java.util.Date;
@@ -68,11 +71,16 @@ public class Delivery  {
 
     public static void addToDeliveryList(OrderPlaced orderPlaced){
 
-        /** Example 1:  new item 
+        /** Example 1:  new item */
         Delivery delivery = new Delivery();
+        delivery.setAddress(orderPlaced.getAddress());
+        delivery.setCustomerId(orderPlaced.getCustomerId());
+        delivery.setOrderId(orderPlaced.getId());
+        delivery.setQuantity(orderPlaced.getQty());
+        
         repository().save(delivery);
 
-        */
+        
 
         /** Example 2:  finding and process
         
@@ -95,16 +103,14 @@ public class Delivery  {
 
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process */
         
-        repository().findById(orderCancelled.get???()).ifPresent(delivery->{
+        repository().findByOrderId(orderCancelled.getId()).ifPresent(delivery->{
+                       
+            repository().delete(delivery);
             
-            delivery // do something
-            repository().save(delivery);
-
 
          });
-        */
 
         
     }
